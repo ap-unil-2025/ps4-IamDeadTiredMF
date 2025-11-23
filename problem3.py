@@ -21,9 +21,11 @@ def create_contact(name, phone, email=""):
         >>> create_contact("Alice", "555-0001", "alice@email.com")
         {'name': 'Alice', 'phone': '555-0001', 'email': 'alice@email.com'}
     """
-    # TODO: Implement this function
-    # Return a dictionary with the contact information
-    pass
+    dictionary ={}
+    dictionary['name']=name
+    dictionary['phone']=phone
+    dictionary['email']=email
+    return dictionary
 
 
 def add_contact(contacts, name, phone, email=""):
@@ -46,12 +48,8 @@ def add_contact(contacts, name, phone, email=""):
         >>> len(contacts)
         1
     """
-    # TODO: Implement this function
-    # Steps:
-    # 1. Create a contact using create_contact()
-    # 2. Add it to the contacts list
-    # 3. Return the contact
-    pass
+    contacts.append(create_contact(name,phone,email))
+    return contacts[-1]
 
 
 def find_contact_by_name(contacts, name):
@@ -70,10 +68,11 @@ def find_contact_by_name(contacts, name):
         >>> find_contact_by_name(contacts, 'alice')
         {'name': 'Alice', 'phone': '555-0001', 'email': ''}
     """
-    # TODO: Implement this function
-    # Loop through contacts and compare names (case-insensitive)
-    # Hint: Use .lower() for case-insensitive comparison
-    pass
+    for contact in contacts:
+        if contact['name'].lower() == name.lower():
+            return contact
+    return None
+
 
 
 def search_contacts(contacts, search_term):
@@ -95,11 +94,10 @@ def search_contacts(contacts, search_term):
         >>> search_contacts(contacts, 'alice')
         [{'name': 'Alice Smith', 'phone': '555-0001', 'email': ''}]
     """
-    # TODO: Implement this function
-    # Find contacts where search_term appears in name OR phone
-    # Use .lower() for case-insensitive search
-    # Hint: Use 'in' operator to check if search_term is in the string
-    pass
+    for contact in contacts:
+        if search_term.lower() in contact['name'].lower() or search_term in contact['phone']:
+            return contact
+    return []
 
 
 def delete_contact(contacts, name):
@@ -120,11 +118,11 @@ def delete_contact(contacts, name):
         >>> len(contacts)
         0
     """
-    # TODO: Implement this function
-    # Find the contact and remove it from the list
-    # Return True if found and deleted, False otherwise
-    # Hint: Use enumerate() to get index, then use .pop() to remove
-    pass
+    for contact in contacts:
+        if contact['name'].lower() == name.lower():
+            contacts.remove(contact)
+            return True
+    return False
 
 
 def count_contacts_with_email(contacts):
@@ -145,9 +143,11 @@ def count_contacts_with_email(contacts):
         >>> count_contacts_with_email(contacts)
         1
     """
-    # TODO: Implement this function
-    # Count contacts where email is not empty
-    pass
+    count=0
+    for contact in contacts:
+        if contact['email']!="":
+            count += 1
+    return count
 
 
 def get_all_phone_numbers(contacts):
@@ -168,10 +168,10 @@ def get_all_phone_numbers(contacts):
         >>> get_all_phone_numbers(contacts)
         ['555-0001', '555-0002']
     """
-    # TODO: Implement this function
-    # Extract phone number from each contact
-    # Hint: Use list comprehension or a loop
-    pass
+    phone_numbers = []
+    for contact in contacts:
+        phone_numbers.append(contact['phone'])
+    return phone_numbers
 
 
 def sort_contacts_by_name(contacts):
@@ -193,10 +193,7 @@ def sort_contacts_by_name(contacts):
         >>> [c['name'] for c in sorted_contacts]
         ['Alice', 'Charlie']
     """
-    # TODO: Implement this function
-    # Use sorted() with a key function
-    # Hint: sorted(contacts, key=lambda c: c['name'])
-    pass
+    return sorted(contacts, key=lambda contact: contact['name'])
 
 
 def contact_exists(contacts, name):
@@ -210,9 +207,10 @@ def contact_exists(contacts, name):
     Returns:
         bool: True if contact exists, False otherwise
     """
-    # TODO: Implement this function
-    # Use find_contact_by_name and check if result is not None
-    pass
+    for contact in contacts:
+        if contact['name'].lower() == name.lower():
+            return True
+    return False
 
 
 # Test cases
